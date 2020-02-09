@@ -1,0 +1,13 @@
+version: '2'
+
+#apache httpd server
+
+services:
+  httpd:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: httpd
+    ports:
+     - "80:80"
+    restart: always
