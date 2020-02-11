@@ -3,11 +3,38 @@ version: '2'
 #apache httpd server
 
 services:
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Asia/Tokyo
+      - URL=llasuka.synology.me
+      - SUBDOMAINS=redmine,storage,usanikki
+      - VALIDATION=http
+    ports:
+      - "10080:80"
+    restart: unless-stopped
+    volumes:
+      - letsencrypt-config:/config
+
   httpd:
     build:
       context: ./
       dockerfile: Dockerfile
     container_name: httpd
+    links:
+     - letsencrypt
     ports:
      - "80:80"
+     - "443:443"
     restart: always
+    volumes_from:
+     - letsencrypt:ro
+
+volumes:
+  letsencrypt-config:
+    external: true
