@@ -13,7 +13,7 @@ services:
       - PGID=1000
       - TZ=Asia/Tokyo
       - URL=llasuka.synology.me
-      - SUBDOMAINS=redmine,storage,usanikki
+      - SUBDOMAINS=redmine,storage,grafana,prometheus
       - VALIDATION=http
     ports:
       - "10080:80"
